@@ -2,22 +2,9 @@
   <button class="btn btn-ghost text-xl">Memory Card</button>
 </div>
 <div class="p-4 flex flex-col gap-4">
-  <div class="flex flex-row gap-4">
-    <form class="flex flex-col"
-      [formGroup]="stateForm">
-      <!-- State selection -->
-      <label for="state">State: </label>
-      <select id="state"
-        formControlName="state"
-        class="select select-primary w-full w-80">
-        <option disabled
-          selected>Select your state</option>
-        <option value="nj">New Jersey</option>
-      </select>
-    </form>
+  <div class="flex flex-row justify-center gap-4">
     <!-- Answers -->
     <div class="stats shadow">
-
       <div class="stat place-items-center">
         <div class="stat-title">Right</div>
         <div class="stat-value">{{rightAnswers.length}}</div>
@@ -38,35 +25,32 @@
     </div>
   </div>
   <div *ngIf="currentQuestion != null"
-    class="flex justify-center p-4">
+    class="flex justify-center p-1">
     <!-- Question -->
-    <div class="w-1/2 not-prose card bg-base-200 shadow-xl"
-      (click)="toggleAnswer()"
-      *ngIf="showAnswer === false">
+    <div class=" not-prose card card-compact bg-base-200 shadow-xl"
+      (click)="toggleAnswer()">
       <div class="card-body">
         <h2 class="card-title">
-          {{currentQuestion.section}} / {{currentQuestion.subsection}}
+          {{currentQuestion.question}}
         </h2>
-        <p>Q: {{currentQuestion.question}}</p>
-      </div>
-    </div>
-
-    <!-- Answer -->
-    <div class="w-1/2 not-prose card bg-base-200 shadow-xl"
-      *ngIf="showAnswer === true">
-      <div class="card-body">
-        <h2 class="card-title">{{currentQuestion.section}} / {{currentQuestion.subsection}}</h2>
-        <p>Q: {{currentQuestion.question}}</p>
-        <p *ngIf="currentQuestion.answers.length === 1">A: {{currentQuestion.answers[0]}}</p>
-        <ul class="prose"
-          *ngIf="currentQuestion.answers.length > 1">
-          <li *ngFor="let answer of currentQuestion.answers">{{answer}}</li>
-        </ul>
-        <div class="card-actions justify-center">
-          <button class="btn btn-secondary"
-            (click)="rightAnswer()">Right</button>
-          <button class="btn btn-secondary"
-            (click)="wrongAnswer()">Wrong</button>
+        <span class="text-xs text-gray-500">
+          {{currentQuestion.section}} &gt; {{currentQuestion.subsection}}
+        </span>
+        <!-- Answers -->
+        <div *ngIf="showAnswer === true"
+          class="flex flex-col gap-4">
+          <p *ngIf="currentQuestion.answers.length === 1">A: {{currentQuestion.answers[0]}}</p>
+          <ul class="prose"
+            *ngIf="currentQuestion.answers.length > 1">
+            <li *ngFor="let answer of currentQuestion.answers">{{answer}}</li>
+          </ul>
+          <!-- Buttons -->
+          <div class="card-actions flex flex-row justify-evenly">
+            <button class="btn btn-success w-1/3"
+              (click)="rightAnswer()">Right</button>
+            <button class="btn btn-error  w-1/3"
+              (click)="wrongAnswer()">Wrong</button>
+          </div>
         </div>
       </div>
     </div>
